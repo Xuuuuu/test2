@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Jobs </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	
+
+  
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico">
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="/static/css/css2/animate.css">
+        <!-- Icomoon Icon Fonts-->
+        <link rel="stylesheet" href="/static/css/css2/icomoon.css">
+        <!-- Bootstrap  -->
+        <link rel="stylesheet" href="/static/css/css2/bootstrap.css">
+
+        <link rel="stylesheet" href="/static/css/css2/style.css">
+        <!-- TEMPLATE CORE CSS -->
+        <link rel="stylesheet" href="/static/css/css4/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="/static/js/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript" src="/static/js/ckeditor/ckeditor.js"></script>
+
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+	<header>
+         <div id="spinner">
+            <div class="spinner-img"> <img alt="Opportunities Preloader" src="/static/images/loader.gif" />
+                <h2>Please Wait.....</h2>
+            </div>
+        </div>
+        <div class="container text-right">
+            <a href="{{ url_for('auth.login') }}" class="active">登录</a>
+            <a>|</a>
+            <a href="{{ url_for('auth.logout') }}" class="active">注销</a>
+        </div>
+		<div class="container text-center">
+			<div class="fh5co-navbar-brand">
+				<a class="fh5co-logo" href="{{ url_for('user.index') }}">Jobs</a>
+			</div>
+			<nav id="fh5co-main-nav" role="navigation">
+				<ul>
+					<li><a href="{{ url_for('user.index') }}"  >主页</a></li>
+					<li><a href="{{ url_for('user.work') }}" >工作</a></li>
+					<li><a href="{{ url_for('user.post') }}">言职</a></li>
+                    {% if current_user.is_authenticated() %}
+                        <li>
+                            <a class="active" href="{{ url_for('user.user_profile', username=current_user.username)}} ">个人
+                            </a>
+                        </li>
+                    {% endif %}
+{#                    <li><a href="{{ url_for('user.contact') }}" >联系</a></li>#}
+				</ul>
+			</nav>
+		</div>
+	</header>
+    <section class="job-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-7 co-xs-12 text-left">
+                        <h3>{{ current_user.username }}</h3>
+                    </div>
+                    <div class="col-md-6 col-sm-5 co-xs-12 text-right">
+                        <div class="bread">
+                            <ol class="breadcrumb">
+                                <li><a href=>{{ current_user.username }}</a> </li>
+                                <li class="active">更新信息</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <section class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 nopadding">
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="widget">
+                                <div class="widget-heading"><span class="title">选项</span></div>
+                                <ul class="categories-module">
+                                    <li> <a href="{{ url_for('user.user_profile', username=current_user.username) }}">个人资料 </a> </li>
+                                    <li> <a href="{{ url_for('user.edit_profile') }}"> 更新信息   </a> </li>
+                                    <li> <a href="{{ url_for('user.edit_post') }}"> 我的言职 </a></li>
+                                    <li> <a href="{{ url_for('user.user_job_hire') }}"> 我的职位 </a></li>
+                                    <li> <a href="{{ url_for('auth.change_password')}}"> 更改密码 </a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="heading-inner first-heading">
+                                <p class="title">编辑信息</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 nopadding">
+                                <div class="profile-edit row">
+
+                                    <form action="{{ url_for('user.edit_profile') }} " method="POST">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>姓名<span class="required">*</span></label>
+                                                {{ forms.name(value=info.name,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>联系方式 <span class="required">*</span></label>
+                                                {{ forms.phone(value=info.phone,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>学历 <span class="required">*</span></label>
+                                                {{ forms.education(value=info.education,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>邮件地址 <span class="required">*</span></label>
+                                                {{ forms.email(value=info.email,class="form-control") }}
+{#                                                <input type="email" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>民族 <span class="required">*</span></label>
+                                                {{ forms.ethn(value=info.ethn,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>位置 <span class="required">*</span></label>
+                                                {{ forms.location(value=info.location,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>学校 <span class="required">*</span></label>
+                                                {{ forms.school(value=info.school,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label>教育经历 <span class="required">*</span></label>
+                                                {% set f = forms.school_text.process_data(info.school_text) %}
+                                                {{ forms.school_text(class="ckeditor",cols="3",rows="8") }}
+{#                                                <textarea cols="6" rows="8" placeholder="" class="form-control"></textarea>#}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label> 公司名<span class="required">*</span></label>
+                                                {{ forms.company(value=info.company,class="form-control") }}
+{#                                                <input type="text" placeholder="" class="form-control">#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label>工作经验 <span class="required">*</span></label>
+                                                {% set f = forms.company_text.process_data(info.company_text) %}
+                                                {{ forms.company_text(class="ckeditor",cols="3",rows="8") }}
+{#                                                <textarea cols="6" rows="8" placeholder="" class="form-control"></textarea>#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label>关于自己 <span class="required">*</span></label>
+                                                {% set f = forms.about_me.process_data(info.about_me) %}
+                                                {{ forms.about_me(class="ckeditor",cols="3",rows="8") }}
+{#                                                <textarea cols="6" rows="8" placeholder="" class="form-control"></textarea>#}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <button type="submit" class="btn btn-default pull-right"> 保存 <i class="fa fa-angle-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+
+	<!-- jQuery -->
+	<script src="/static/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/static/js/jquery.waypoints.min.js"></script>
+	<!-- Owl carousel -->
+	<script src="/static/js/owl.carousel.min.js"></script>
+	<!-- Stellar -->
+	<script src="/static/js/jquery.stellar.min.js"></script>
+
+     <a href="#" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JAVASCRIPT JS  -->
+    <script type="text/javascript" src="/static/js/jquery-2.2.3.min.js"></script>
+
+
+    <!-- JQUERY SELECT -->
+    <script type="text/javascript" src="/static/js/select2.min.js"></script>
+
+    <!-- MEGA MENU -->
+    <script type="text/javascript" src="/static/js/mega_menu.min.js"></script>
+
+    <!-- JQUERY EASING -->
+    <script type="text/javascript" src="/static/js/easing.js"></script>
+
+    <!-- JQUERY COUNTERUP -->
+    <script type="text/javascript" src="/static/js/counterup.js"></script>
+
+    <!-- JQUERY WAYPOINT -->
+    <script type="text/javascript" src="/static/js/waypoints.min.js"></script>
+
+    <!-- JQUERY REVEAL -->
+    <script type="text/javascript" src="/static/js/footer-reveal.min.js"></script>
+
+    <!-- Owl Carousel -->
+    <script type="text/javascript" src="/static/js/owl-carousel.js"></script>
+
+    <!-- CORE JS -->
+    <script type="text/javascript" src="/static/js/custom.js"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="/static/js/main.js"></script>
+	</body>
+</html>
+

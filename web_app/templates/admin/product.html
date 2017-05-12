@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>服务器服务 | jobs用户中心</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/highlight.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-switch.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/static/css/framework.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/main.css"/>
+
+</head>
+<body>
+
+<div class="page">
+    <!--header begin-->
+    <header>
+        <div class="bigcontainer">
+            <div id="logo">
+                <a href="{{ url_for('user.index') }}">Jobs用户中心</a>
+            </div>
+            <div class="user">
+
+                    <div class="menu">
+                        <a class="item" href="{{ url_for('admin.index') }}"><i class="reply mail icon"></i>返回首页</a>
+                        <a class="item" href="{{ url_for('auth.logout') }}"><i class="sign out icon"></i>注销登录</a>
+                    </div>
+            </div>
+        </div>
+    </header>
+    <!-- the main menu-->
+    <div class="ui teal inverted menu fluid">
+        <div class="bigcontainer">
+            <div class="right menu">
+                <a class="item" href="{{ url_for('admin.index') }}"><i class="home icon"></i>管理首页</a>
+                <a class="active item" href="{{ url_for('admin.product') }}"><i class="cloud icon"></i>服务器</a>
+                <a class="item" href="{{ url_for('admin.user_profile') }}"><i class="info icon"></i>账户</a>
+            </div>
+        </div>
+    </div>
+    <!--the main content begin-->
+    <div class="container">
+        <!--the content-->
+        <div class="ui grid">
+            <!--the vertical menu-->
+            <div class="four wide column">
+                <div class="verticalMenu">
+                    <div class="ui vertical pointing menu fluid">
+                        <a class="item" href="{{ url_for('admin.deploy') }}">
+                            <i class="rocket icon"></i> 服务器信息
+                        </a>
+                        <a class="active teal item" href="{{ url_for('admin.product') }}">
+                            <i class="cloud icon"></i> 服务器服务
+                        </a>
+  						<a class="item" href="{{ url_for('admin.actions') }}">
+							<i class="terminal icon"></i> IP扫描
+  						</a>
+                    </div>
+                </div>
+            </div>
+            <div class="twelve wide column">
+                <div class="pageHeader">
+                    <div class="segment">
+                        <h3 class="ui dividing header">
+                            <i class="large setting icon"></i>
+
+                            <div class="content">
+                                服务器服务信息
+                                <div class="sub header">管理服务器信息</div>
+                            </div>
+                        </h3>
+                    </div>
+                </div>
+                <!--the device info-->
+                <nav class="">
+                    <br>
+                    <ul>
+                        <li>
+
+                            <form name="form1" id="form1" action="" method="post" >
+                                <ul>
+                                    <li>
+                                        <div class="content">
+                                             <p>WEB服务 ：  nginx</p>
+                                            <input class="form-control" name="webcbox" id="webcbox"  type="checkbox" >
+                                            <input class="ui tiny green button"  type="submit" name="startservice" id="startservice" value="开始服务" onclick="document.getElementById('text').value='service nginx start'" style="margin-left: 250px" >
+                                            <input class="ui tiny blue submit button" type="submit" name="restartservice" onclick="document.getElementById('text').value='service nginx restart'" value="重启服务" >
+                                            <input class="ui tiny  red button" type="submit" name="stopservice" onclick="document.getElementById('text').value='service nginx stop'" value="关闭服务" >
+                                            <input type="text" name="text" id="text" value="" style="display:none"/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                            <br>
+                        </li>
+                        <li>
+                            <form name="form2" id="form2" action="" method="post"  >
+                                <ul>
+                                    <li>
+                                          <div class="content">
+                                             <p>FTP服务 ：  vsftpd</p>
+                                            <input class="form-control" name="ftpcbox" id="ftpcbox"  type="checkbox" >
+                                            <input class="ui tiny green button"  type="submit" name="startservice" id="startservice" value="开始服务" onclick="document.getElementById('text2').value='/etc/init.d/vsftpd start'" style="margin-left: 250px" >
+                                            <input class="ui tiny blue submit button" type="submit" name="restartservice" onclick="document.getElementById('text2').value='/etc/init.d/vsftpd restart'" value="重启服务" >
+                                            <input class="ui tiny  red button" type="submit" name="stopservice" onclick="document.getElementById('text2').value='/etc/init.d/vsftpd stop'" value="关闭服务" >
+                                              <input type="text" name="text" id="text2" value="" style="display:none"/>
+
+                                          </div>
+                                    </li>
+                                </ul>
+                            </form>
+                            <br>
+                        </li>
+                        <li>
+                            <form name="form3" id="form3" action="" method="post"  >
+                                <ul>
+                                    <li>
+                                        <div class="content">
+                                               <p>DNS服务 ：  BIND9</p>
+                                            <input class="form-control" name="dnscbox" id="dnscbox"  type="checkbox" >
+                                            <input class="ui tiny green button" name="start" id="start" type="submit"  value="开始服务" onclick="document.getElementById('text3').value='/etc/init.d/bind9 start'" style="margin-left: 250px" >
+                                            <input class="ui tiny blue submit button" type="submit" name="restartservice" id="restartservice" onclick="document.getElementById('text3').value='/etc/init.d/bind9 restart'"  value="重启服务" >
+                                            <input class="ui tiny  red button" type="submit" name="stopservice" id="stopservice" onclick="document.getElementById('text3').value='/etc/init.d/bind9 stop'" value="关闭服务" >
+                                            <input type="text" name="text" id="text3" value="" style="width:0 ;length:0;display:none"/>
+
+                                                </div>
+
+                                    </li>
+                                </ul>
+                            </form>
+                            <br>
+                        </li>
+                        <li>
+                            <form name="form4" id="form4" action="" method="post"  >
+                                <ul>
+                                    <li>
+                                        <div class="content">
+                                            <p>SSH服务 ：  openssh-server</p>
+                                            <input class="form-control" name="sshcbox" id="sshcbox"  type="checkbox" >
+                                            <input class="ui tiny green button" name="startservice" id="startservice" type="submit" value="开始服务" onclick="document.getElementById('text4').value='/etc/init.d/ssh start'" style="margin-left: 250px" >
+                                            <input class="ui tiny blue submit button" type="submit" name="restartservice" onclick="document.getElementById('text4').value='/etc/init.d/ssh retart'" value="重启服务" >
+                                            <input class="ui tiny  red button" type="submit" name="stopservice" onclick="document.getElementById('text4').value='/etc/init.d/ssh stop'" value="关闭服务" >
+                                            <input type="text" name="text" id="text4" value="" style="width:0 ;length:0;display:none"/>
+
+                                            </div>
+                                    </li>
+                                </ul>
+                                <br>
+                            </form>
+                        </li>
+                        <li>
+                            <form name="form5" id="form5" action="" method="post"  >
+                                <ul>
+                                    <li>
+                                        <div class="content">
+                                            <p>邮件服务 ：  exim4</p>
+                                            <input class="form-control" name="sshcbox" id="sshcbox"  type="checkbox" >
+                                            <input class="ui tiny green button" name="startservice" id="startservice" type="submit" value="开始服务" onclick="document.getElementById('text5').value='/etc/init.d/exim4 start'" style="margin-left: 250px" >
+                                            <input class="ui tiny blue submit button" type="submit" name="restartservice" onclick="document.getElementById('text5').value='/etc/init.d/exim4 retart'" value="重启服务" >
+                                            <input class="ui tiny  red button" type="submit" name="stopservice" onclick="document.getElementById('text5').value='/etc/init.d/exim4 stop'" value="关闭服务" >
+                                            <input type="text" name="text" id="text5" value="" style="display:none"/>
+
+                                            </div>
+                                    </li>
+                                </ul>
+                                <br>
+                            </form>
+                            <br>
+                        </li>
+                    </ul>
+                </nav>
+                <!--<footer>
+                    <div id="copyrights">
+                        <div class="inset">
+                            <div class="bigcontainer">
+                                <div class="fl">
+                                    <div class="logo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer> -->
+                <script type="text/javascript" src="/static/javascript/jquery.min.js"></script>
+                <script type="text/javascript" src="/static/javascript/framework.js"></script>
+             <!--   <script>
+                    $('.ui.dropdown')
+                            .dropdown();
+
+               </script>-->
+                <script src="/static/javascript/jquery.min.js"></script>
+                <script src="/static/javascript/bootstrap.min.js"></script>
+                <script src="/static/javascript/bootstrap-switch.js"></script>
+
+
+
+                <script>
+                    $(function(argument) {
+                        var val1={{ var1 }}
+                        var val2={{ var2 }}
+                        var val3={{ var3 }}
+                        var val4={{ var4 }}
+                        var val5={{ var5 }}
+
+                        if(val1){
+                            statecode1 =true
+                        }
+                        else{
+                            statecode1=false
+                        }
+
+
+                        if(val2){
+                            statecode2 =true
+                        }
+                        else{
+                            statecode2=false
+                        }
+
+
+                        if(val3){
+                            statecode3 =true
+                        }
+                        else{
+                            statecode3=false
+                        }
+
+
+                        if(val4){
+                            statecode4 =true
+                        }
+                        else{
+                            statecode4=false
+                        }
+
+
+                        if(val5){
+                            statecode5 =true
+                        }
+                        else{
+                            statecode5=false
+                        }
+
+                        $('[id="webcbox"]').bootstrapSwitch({
+                            onText:"启动",
+                            offText:"停止",
+                            onColor:"success",
+                            offColor:"danger",
+                            size:"small",
+                            state:statecode1,
+                            readonly:true
+                        });
+                         $('[id="ftpcbox"]').bootstrapSwitch({
+                            onText:"启动",
+                            offText:"停止",
+                            onColor:"success",
+                            offColor:"danger",
+                            size:"small",
+                            state:statecode2,
+                            readonly:true
+                        });
+                         $('[id="dnscbox"]').bootstrapSwitch({
+                            onText:"启动",
+                            offText:"停止",
+                            onColor:"success",
+                            offColor:"danger",
+                            size:"small",
+                            state:statecode3,
+                            readonly:true
+                        });
+                         $('[id="sshcbox"]').bootstrapSwitch({
+                            onText:"启动",
+                            offText:"停止",
+                            onColor:"success",
+                            offColor:"danger",
+                            size:"small",
+                            state:statecode4,
+                            readonly:true
+                        });
+                         $('[id="eximcbox"]').bootstrapSwitch({
+                            onText:"启动",
+                            offText:"停止",
+                            onColor:"success",
+                            offColor:"danger",
+                            size:"small",
+                            state:statecode5,
+                            readonly:true
+                        });
+                    })
+                </script>
+                <script language="javascript">
+                    function submitit(){
+                        var tform1= document.getElementById("formid1");
+                        var tform2= document.getElementById("formid2");
+                        var tform3= document.getElementById("formid3");
+                        var tform4= document.getElementById("formid3");
+                        var tform5= document.getElementById("formid3");
+                        tform1.submit();
+                        tform2.submit();
+                        tform3.submit();
+                        tform4.submit();
+                        tform5.submit();
+
+  }
+  </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

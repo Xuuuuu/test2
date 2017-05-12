@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Jobs </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	
+
+  
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="/static/css/css2/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/static/css/css2/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/static/css/css2/bootstrap.css">
+
+	<link rel="stylesheet" href="/static/css/css2/style.css">
+
+    <!-- JQUERY MENU -->
+    <link rel="stylesheet" href="/static/css/css4/mega_menu.min.css">
+
+    <!-- ANIMATION -->
+    <link rel="stylesheet" href="/static/css/css4/animate.min.css">
+
+    <!-- OWl  CAROUSEL-->
+    <link rel="stylesheet" href="/static/css/css4/owl.carousel.css">
+    <link rel="stylesheet" href="/static/css/css4/owl.style.css">
+
+    <!-- TEMPLATE CORE CSS -->
+    <link rel="stylesheet" href="/static/css/css4/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="/static/js/modernizr-2.6.2.min.js"></script>
+     <!-- JavaScripts -->
+    <script src="/static/js/modernizr.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+	<header>
+         <div id="spinner">
+            <div class="spinner-img"> <img alt="Opportunities Preloader" src="/static/images/loader.gif" />
+                <h2>Please Wait.....</h2>
+            </div>
+        </div>
+        <div class="container text-right">
+            <a href="{{ url_for('auth.login') }}" class="active">登录</a>
+            <a>|</a>
+            <a href="{{ url_for('auth.logout') }}" class="active">注销</a>
+        </div>
+		<div class="container text-center">
+			<div class="fh5co-navbar-brand">
+				<a class="fh5co-logo" href="{{ url_for('user.index') }}">Jobs</a>
+			</div>
+			<nav id="fh5co-main-nav" role="navigation">
+				<ul>
+					<li><a href="{{ url_for('user.index') }}"  >主页</a></li>
+					<li><a href="{{ url_for('user.work') }}" >工作</a></li>
+					<li><a href="{{ url_for('user.post') }}">言职</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li>
+                            <a href="{{ url_for('user.user_profile', username=current_user.username) }}">个人
+                            </a>
+                        </li>
+                    {% endif %}
+{#                    <li><a href="{{ url_for('user.contact') }}">联系</a></li>#}
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<section class="job-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-7 co-xs-12 text-left">
+                        <h3>{{ user_data.username }}的主页</h3>
+                    </div>
+                    <div class="col-md-6 col-sm-5 co-xs-12 text-right">
+                        <div class="bread">
+                            <ol class="breadcrumb">
+                                <li><a >主页</a> </li>
+                                <li class="active">{{user_data.username }}的个人信息</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories-list-page light-grey">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <aside>
+                                <div class="widget">
+                                    <div class="widget-heading"><span class="title">他的言职</span></div>
+                                    <ul class="categories-module">
+
+                                        {% for post_data in post_data.items %}
+                                        <li> <a href="{{ url_for('user.post_doc',post_id=post_data.id) }}"> {{ post_data.title }}  </a> </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="widget">
+                                    <div class="widget-heading"><span class="title">他感兴趣的职位</span></div>
+                                    <ul class="related-post">
+                                        {% for job_data in job_data.items %}
+                                        <li>
+                                            <a  href="{{ url_for('user.hire_job',job_id=job_data.jobs_id) }}">{{job_data.positionName  }} </a>
+                                            <span><i class="fa fa-map-marker"></i>{{job_data.companyName  }}</span>
+                                            <span><i class="fa fa-calendar"></i>{{job_data.createTime  }}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            </aside>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="job-short-detail">
+                                <div class="heading-inner">
+                                    <p class="title">个人信息</p>
+                                </div>
+                                <dl>
+                                    <dt>姓名:</dt>
+                                    <dd>{{ userInfo.name }}</dd>
+
+                                    <dt>民族:</dt>
+                                    <dd> {{ userInfo.ethn }} </dd>
+
+                                    <dt>学历:</dt>
+                                    <dd> {{ userInfo.education }} </dd>
+
+                                    <dt>电话:</dt>
+                                    <dd>{{ userInfo.phone }} </dd>
+
+                                    <dt>邮件:</dt>
+                                    <dd>{{ userInfo.email }} </dd>
+
+                                    <dt>地址:</dt>
+                                    <dd>{{ userInfo.location }}</dd>
+                                </dl>
+                            </div>
+                            <div class="heading-inner">
+                                <p class="title">教育经历：{{ userInfo.school}}</p>
+                            </div>
+                            <p>{{ userInfo.school_text | safe }}</p>
+
+                            <div class="heading-inner">
+                                <p class="title">工作经历：{{ userInfo.company}}</p>
+                            </div>
+                            <p>{{ userInfo.company_text | safe }}</p>
+
+                            <div class="heading-inner">
+                                <p class="title">关于他:</p>
+                            </div>
+                            <p>{{ userInfo.about_me | safe }}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    <!-- JAVASCRIPT JS  -->
+    <script type="text/javascript" src="/static/js/jquery-2.2.3.min.js"></script>
+      <!-- JQUERY SELECT -->
+        <script type="text/javascript" src="/static/js/select2.min.js"></script>
+
+        <!-- MEGA MENU -->
+        <script type="text/javascript" src="/static/js/mega_menu.min.js"></script>
+
+        <!-- JQUERY EASING -->
+        <script type="text/javascript" src="/static/js/easing.js"></script>
+
+        <!-- JQUERY COUNTERUP -->
+        <script type="text/javascript" src="/static/js/counterup.js"></script>
+
+        <!-- JQUERY WAYPOINT -->
+        <script type="text/javascript" src="/static/js/waypoints.min.js"></script>
+
+        <!-- JQUERY REVEAL -->
+        <script type="text/javascript" src="/static/js/footer-reveal.min.js"></script>
+
+        <!-- Owl Carousel -->
+        <script type="text/javascript" src="/static/js/owl-carousel.js"></script>
+
+        <!-- CORE JS -->
+        <script type="text/javascript" src="/static/js/custom.js"></script>
+
+	<!-- jQuery -->
+	<script src="/static/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/static/js/jquery.waypoints.min.js"></script>
+	<!-- Owl carousel -->
+	<script src="/static/js/owl.carousel.min.js"></script>
+	<!-- Stellar -->
+	<script src="/static/js/jquery.stellar.min.js"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="/static/js/main.js"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>评论管理 | Jobs用户中心</title>
+    <!-- basic styles -->
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+	  		<![endif]-->
+    <!-- page specific plugin styles -->
+
+    <link rel="stylesheet" href="/static/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="/static/css/datepicker.css" />
+    <link rel="stylesheet" href="/static/css/ui.jqgrid.css" />
+
+    <script src="/static/javascript/ace-extra.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/framework.css" />
+    <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
+</head>
+<body>
+<div class="page">
+<!--header begin-->
+<header>
+	<div class="bigcontainer">
+		<div id="logo">
+			<a href="{{ url_for('user.index') }}">Jobs</a>
+		</div>
+		<div class="user">
+				<div class="menu">
+					<a class="item" href="{{ url_for('admin.index') }}"><i class="reply mail icon"></i>返回首页</a>
+					<a class="item" href="{{ url_for('auth.login') }}"><i class="sign out icon"></i>注销登录</a>
+				</div>
+		</div>
+	</div>
+</header>
+<!-- the main menu-->
+<div class="ui teal inverted menu">
+	<div class="bigcontainer">
+		<div class="right menu">
+			<a class="item" href="{{ url_for('admin.index') }}"><i class="home icon"></i>管理首页</a>
+			<a class="item" href="{{ url_for('admin.product') }}"><i class="cloud icon"></i>服务器</a>
+            <a class="active item" href="{{ url_for('admin.user_profile') }}"><i class="info icon"></i>账户</a>
+		</div>
+	</div>
+</div>
+<!--the main content begin-->
+	<div class="container">
+	<!--the content-->
+		<div class="ui grid">
+			<!--the vertical menu-->
+			<div class="four wide column">
+				<div class="verticalMenu">
+					<div class="ui vertical pointing menu fluid">
+  						<a class="item" href="{{ url_for('admin.user_profile') }}">
+							<i class="edit icon"></i>用户职位
+  						</a>
+						<a class="active teal item" href="{{ url_for('admin.commnet_edit') }}">
+							<i class="chat icon"></i>评论管理
+						</a>
+  						<a class="item" href="{{ url_for('admin.edit_posts_doc') }}">
+    						<i class="edit icon"></i> 言职管理
+  						</a>
+                         <a class="item" href="{{ url_for('admin.user_edit') }}">
+    						<i class="edit icon"></i> 用户管理
+  						</a>
+					</div>
+				</div>
+			</div>
+
+                        <div class="twelve wide column">
+				<div class="pageHeader">
+					<div class="segment">
+						<h3 class="ui dividing  header">
+
+  							<div class="content">
+    							管理言职
+  							</div>
+						</h3>
+					</div>
+				</div>
+				<!--the form-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="alert alert-info">
+                            <i class="icon-hand-right"></i>
+                            已发表的评论
+                              <input type="text" name="text" id="text1" value="{{ userinfo }}" style="width:0 ;length:0;display:none"/>
+                        </div>
+                        <table id="grid-table"></table>
+                        <div id="grid-pager"></div>
+                        <script type="text/javascript">
+                            var $path_base = "/";//this will be used in gritter alerts containing images
+                        </script>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+
+                <div class="resume-list">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>用户名</th>
+                                    <th>内容</th>
+                                    <th>发布时间</th>
+                                    <th >删除</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for data in data %}
+                                <form method="post" action="{{ url_for('admin.commnet_edit') }}">
+                                <tr>
+                                    <td><h5> <a href="{{ url_for('user.show_user_profile',id=data.user.id) }}">{{ data.user.username }}</a></h5></td>
+                                    <td><h5>{{ data.text }}</h5></td>
+                                    <td><h5>{{ data.date }}</h5></td>
+                                    <input type="text" name="info_id" id="text" style="display:none" value={{ data.id }} />
+                                    <td><input class="btn btn-danger" type="submit" value="删除"> </td>
+                                </tr>
+                                <form>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="/static/javascript/jquery.min.js"></script>
+<script type="text/javascript" src="/static/javascript/framework.js"></script>
+<script type="text/javascript">
+	$('.ui.dropdown')
+	.dropdown();
+	$('.ui.basic.modal')
+  	.modal('attach events','.red.button','show');
+</script>
+</body>
+</html>
